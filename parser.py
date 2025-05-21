@@ -14,7 +14,7 @@ def extraer_datos(texto):
         datos['direccion_empresa'] = 'DIRECCION_DESCONOCIDA'
 
     # Cliente
-    match_cliente = re.search(r'facturara\s+([a-záéíóúüñ\s]+)', texto, re.IGNORECASE)
+    match_cliente = re.search(r'Enviara\s+([a-záéíóúüñ\s]+)', texto, re.IGNORECASE)
     if match_cliente:
         datos['cliente'] = match_cliente.group(1).strip().title()
     else:
