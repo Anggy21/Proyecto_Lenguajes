@@ -1,36 +1,37 @@
-import pytesseract
-from PIL import Image
-import pytesseract
-import cv2
 import os
-import fitz
+import easyocr
+import cv2
+import numpy as np
+import pdfplumber
 
+def read_image_with_easyocr(img_path):
+    reader = easyocr.Reader(['es'])
+    img = cv2.imread(img_path)
+    if img is None:
+        print(f"No se pudo cargar la imagen: {img_path}")
+        return
+    result = reader.readtext(img)
+    print(f"Texto extraído de la imagen '{img_path}':")
+    for bbox, text, prob in result:
+        print(f"  Texto: {text}, Confianza: {prob:.2f}")
 
-#progrma que permite leer imagenes
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\tesseract\tesseract.exe"
-os.environ['TESSDATA_PREFIX'] = r"C:\Program Files\tesseract\tessdata"
+def read_pdf_text(pdf_path):
+    with pdfplumber.open(pdf_path) as pdf:
+        print(f"Texto extraído del PDF '{pdf_path}':")
+        for i, page in enumerate(pdf.pages):
+            text = page.extract_text()
+            print(f"\n--- Página {i + 1} ---\n")
+            print(text if text else "[Página vacía o no extraíble]")
 
-ruta_imagen = cv2.imread(r'archivos\grises.jpg')
-ruta_pdf = r"archivos\facturaSavicol.pdf"
+def main(file_path):
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext in ['.jpg', '.jpeg', '.png']:
+        read_image_with_easyocr(file_path)
+    elif ext == '.pdf':
+        read_pdf_text(file_path)
+    else:
+        print(f"Extensión '{ext}' no soportada.")
 
-
-
-def extraer_texto_pdf_embebido(ruta_pdf):
-    # Abrir el archivo PDF
-    documento = fitz.open(ruta_pdf)
-    texto_total = ""
-
-    # Recorrer cada página
-    for i, pagina in enumerate(documento):
-        texto = pagina.get_text()
-        texto_total += f"\n--- Página {i+1} ---\n{texto}"
-
-    documento.close()
-    return texto_total
-
-
-#texto = extraer_texto_pdf_embebido(ruta_pdf)
-texto = pytesseract.image_to_string(ruta_imagen, lang='spa')
-
-print("🧾 TEXTO DETECTADO:")
-print(texto)
+if __name__ == "__main__":
+    file_path = "archivos/stiven.jpg"  # Cambia esto al archivo que quieras probar
+    main(file_path)
