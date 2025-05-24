@@ -260,13 +260,14 @@ def process_file(file_path):
     resultados_corregidos = ocr_from_image(file_path)
 
     if resultados_corregidos:
-        with open("resultado_corregido.txt", "w", encoding="utf-8") as f:
+        with open(r"datos_imagen\resultado_corregido.txt", "w", encoding="utf-8") as f:
             for linea in resultados_corregidos:
                 f.write(linea + "\n")
-        print("[INFO] Resultados corregidos guardados en 'resultado_corregido.txt'")
+        print(f"[INFO] Resultados corregidos guardados en", r'datos_imagen\resultado_corregido.txt')
     else:
         print("[WARN] No se obtuvieron resultados para guardar.")
+        
 
 if __name__ == "__main__":
-    archivo_entrada = 'archivos/grises.jpg'  # Cambia a tu imagen
+    archivo_entrada = 'archivos/original.jpg'  # Cambia a tu imagen
     process_file(archivo_entrada)
