@@ -1,52 +1,43 @@
 JORGE MARIN Q
 FACTURA DE VENTAS
-?isoudota
-NIT:, 86,053,663-3
+?i@indota
+NIT:. 86053,663-3
 No
-6484
+6485
 Ventas al por Mayo y al Detalle
-CREDITO
-Contadol
+CREeDITO [
+ContADO(
 Mz 2H casa No. 2 Salitre Tel: 3138321047
 Régimen Simplificado
-Fecha:
-20/05 /2925sr. (
-(a):
-Stiven
-Villarraga
+Fecha:-
+Zelosl2e2s Sr: (a):
+Anh 9/ Michelle
 Documento No
-106868866
+1pob8s 3690
 CANTIDAD
 Precios
 VALOR
 Código
 Descripción
-unidad
+UNIDAD
 KILOS
-Pollo
+Pøllp
 2
-45200
+35500
 1
-Menudencia
-5
-10502
-Alas
-10
-5030
 Corazón
-2
-8900
+5
+18
+10202
+Menudencia
+3
+6
+1500
 1
 1
-8
-[
 1
-Esta Factura se eslmila para sus efectos legales
-un Título Valor
-1231 de Julio 17 do 2008
+Esta Factura 80 asimlla para 8us oficios legales 3 un Título Valor según Løy 1231 dø Julio 17 do 2008
 TOTAL $
-1153012
-Firma Recibido;
-Dilla
-según
-Ley
+120100
+Firma Recibido:
+10

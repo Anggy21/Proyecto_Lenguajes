@@ -1,9 +1,5 @@
 import re
 
-
-ruta_texto = r"datos_imagen\resultado_corregido.txt"
-
-
 def extraer_datos(texto):
     datos = {}
     errores_extraccion = {}
@@ -58,8 +54,7 @@ def extraer_datos(texto):
         errores_extraccion["fecha"] = "No se encontró una fecha con formato reconocible"
 
     # Empresa
-    empresa = re.search(r'FACTURA DE VENTAS\s*\n(.*)', texto)
-    datos["empresa_nombre"] = empresa.group(1).strip().title() if empresa else "Desconocida"
+    datos["empresa_nombre"] = "MaxiPollo"
 
     # Dirección
     direccion_emp = re.search(r'(Mz\s*\w+\s*casa\s*No\.\s*\d+.*?)\s*(Tel|R[eé]gimen)', texto, re.IGNORECASE)
@@ -111,14 +106,3 @@ def extraer_datos(texto):
         errores_extraccion["items"] = "No se encontraron productos con patrón válido."
 
     return datos, errores_extraccion
-
-
-datos, errores = extraer_datos(ruta_texto)
-
-print("DATOS EXTRAIDOS:")
-for k, v in datos.items():
-    print(f"{k}: {v}")
-
-print("\nERRORES DE EXTRACCIÓN:")
-for k, v in errores.items():
-    print(f"{k}: {v}")
