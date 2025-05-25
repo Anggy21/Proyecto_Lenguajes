@@ -1,74 +1,113 @@
 import streamlit as st
-import os
-import tempfile
+from PIL import Image
 
-from datos_imagen.ocr import process_file as ocr_process_file
-from datos_pdf.extraer_pdf import extraer_texto_pdf
-from datos_imagen.parser_imagen import extraer_datos as extraer_datos_imagen
-from datos_imagen.generar_sql_imagen import generar_sql as generar_sql_imagen
-from datos_pdf.parser_pdf import extraer_datos_pdf
-from datos_pdf.sql_pdf import generar_sql_pdf
+st.set_page_config(page_title="Storytelling del Proyecto", layout="wide")
 
-st.set_page_config(page_title="Generador de SQL desde Facturas", layout="centered")
+# Título
+st.title("🧾 Storytelling del Proyecto: Digitalización Inteligente de Facturas")
 
-st.title("🧾 Generador de SQL desde Facturas")
-st.write("Sube un archivo de factura (imagen o PDF) y genera automáticamente el script SQL.")
+# Presentación del equipo
+with st.expander("👩‍💻 Integrantes del proyecto"):
+    st.markdown("""
+    **Anggy Michelle Marin Alfonso**  
+    - 📘 Cod: `160004521`  
+    - 🎓 Ingeniería de Sistemas
 
-archivo = st.file_uploader("📂 Sube tu archivo (.png, .jpg o .pdf)", type=["png", "jpg", "pdf"])
+    **Jhonnathan Stiven Villarraga Ariza**  
+    - 📘 Cod: `160004546`  
+    - 🎓 Ingeniería de Sistemas
 
-if archivo:
-    extension = os.path.splitext(archivo.name)[1].lower()
+    **Luis Alfonso Medina Romero**  
+    - 📘 Cod: `160004146`  
+    - 🎓 Ingeniería de Sistemas
+    """)
 
-    # Vista previa
-    st.subheader("Vista previa del archivo")
-    if extension in [".png", ".jpg"]:
-        st.image(archivo, use_column_width=True)
-    elif extension == ".pdf":
-        st.write("📄 Archivo PDF subido.")
+st.markdown("---")
 
-    # Guardar archivo temporalmente
-    with tempfile.NamedTemporaryFile(delete=False, suffix=extension) as tmp:
-        tmp.write(archivo.read())
-        tmp_path = tmp.name
+# Sección 1 - Contexto emocional
+st.subheader("👨‍👧 Un problema cotidiano, una solución tecnológica")
+col1, col2 = st.columns([1, 1])
 
-    errores = {}
-    datos = None
-    sql_script = ""
+with col1:
+    st.write("""
+    Cada mañana, mi papá comienza su jornada anotando cuentas en su negocio.  
+    Recibe facturas, las revisa y luego, **dato por dato**, las transcribe manualmente en una hoja de Excel.
 
-    # Procesamiento según tipo
-    if extension in [".png", ".jpg"]:
-        st.info("🖼 Procesando imagen...")
-        ocr_process_file(tmp_path)
-        ruta_texto = r"datos_imagen\resultado_corregido.txt"
-        datos, errores = extraer_datos_imagen(ruta_texto)
-        sql_script = generar_sql_imagen(datos)
-    else:
-        st.info("📄 Procesando PDF...")
-        texto = extraer_texto_pdf(tmp_path)
-        ruta_texto = r"datos_pdf\texto_desde_pdf.txt"
-        datos, errores = extraer_datos_pdf(ruta_texto)
-        sql_script = generar_sql_pdf(datos)
+    Un proceso que consume tiempo, esfuerzo y que está expuesto a errores humanos.
 
-    # Guardar SQL generado
-    ruta_sql = "factura_generada.sql"
-    with open(ruta_sql, "w", encoding="utf-8") as f:
-        f.write(sql_script)
+    Desde esa realidad cotidiana nace este proyecto:  
+    **¿Y si una simple foto o PDF pudiera hacer todo ese trabajo por él?**
+    """)
 
-    # Mostrar SQL generado
-    st.subheader("📜 Script SQL generado")
-    st.code(sql_script, language="sql")
+with col2:
+    st.image("https://cdn-icons-png.flaticon.com/512/3515/3515333.png", width=300, caption="Ejemplo de digitalización")
 
-    # Descargar SQL
-    with open(ruta_sql, "rb") as f:
-        st.download_button(
-            label="📥 Descargar factura_generada.sql",
-            data=f,
-            file_name="factura_generada.sql",
-            mime="text/sql"
-        )
+st.markdown("---")
 
-    # Mostrar errores si los hay
-    if errores:
-        st.subheader("⚠ Errores detectados en la extracción")
-        for campo, mensaje in errores.items():
-            st.warning(f"{campo.upper()}: {mensaje}")
+# Sección 2 - La idea
+st.subheader("💡 La idea: Automatizar lo que mi papá hacía manualmente")
+st.info("""
+Que con una imagen o PDF de la factura, el sistema:
+1. Extraiga el texto automáticamente.
+2. Identifique la información clave.
+3. Genere un script SQL para insertar todo en la base de datos.
+""")
+
+st.markdown("---")
+
+# Sección 3 - ¿Cómo lo hicimos?
+st.subheader("⚙️ ¿Cómo lo desarrollamos?")
+st.write("Usamos tecnologías accesibles pero poderosas:")
+
+tec1, tec2, tec3 = st.columns(3)
+with tec1:
+    st.markdown("🐍 **Python**  \nPara todo el procesamiento backend")
+with tec2:
+    st.markdown("📄 **pdfplumber**  \nPara extraer texto directamente desde archivos PDF")
+with tec3:
+    st.markdown("🔤 **EasyOCR**  \nPara leer texto desde imágenes (.png, .jpg)")
+
+st.markdown("Además, usamos **Expresiones Regulares** para identificar campos clave y **Streamlit** para crear una interfaz web interactiva.")
+st.success("✅ Soporta archivos: `.jpg`, `.png`, `.pdf`")
+
+st.markdown("---")
+
+# Sección 4 - ¿Qué hace el sistema?
+st.subheader("🧠 ¿Qué hace el sistema paso a paso?")
+with st.expander("🔍 Paso 1: Lectura del contenido"):
+    st.write("El sistema detecta el tipo de archivo:")
+    st.markdown("""
+    - Si es **PDF**, usa `pdfplumber` para leer el texto directamente.  
+    - Si es **imagen**, usa easyOCR para reconocer el texto.
+    """)
+
+with st.expander("🧩 Paso 2: Extracción de datos"):
+    st.write("A través de expresiones regulares, identifica y extrae:")
+    st.markdown("""
+    - Cliente, Cédula, Dirección  
+    - NIT de la empresa emisora  
+    - Ítems vendidos con descripción, cantidad y precio  
+    - Subtotal, IVA y Total
+    """)
+
+with st.expander("🧾 Paso 3: Generación del SQL"):
+    st.write("Se genera un script SQL con:")
+    st.markdown("""
+    - `CREATE TABLE IF NOT EXISTS`  
+    - `INSERT INTO` con los datos extraídos  
+    - Listo para ser descargado y ejecutado en la base de datos
+    """)
+
+st.markdown("---")
+
+# Sección final - Cierre
+st.subheader("🌟 Impacto")
+st.write("""
+Este proyecto no solo resuelve un problema personal.  
+Tiene el potencial de ser útil para cualquier negocio pequeño que maneje facturas físicas o PDFs.
+
+**Digitalizar procesos puede transformar realidades cotidianas.**
+""")
+
+st.success("💙 Gracias por su atención.")
+

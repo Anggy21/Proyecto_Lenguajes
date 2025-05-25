@@ -34,13 +34,13 @@ CREATE TABLE IF NOT EXISTS items_factura (
 
 
 INSERT INTO clientes (id, nombre, documento) VALUES (
-    7871, 'Marin Quintero Jorge Enrique', '86053663');
+    1268, 'Marin Quintero Jorge Enrique', '86053663');
 
 INSERT INTO empresas (nombre, direccion, nit) VALUES (
     'Pollo Andino S.A.', 'Cra 27 N 36-36', '860076820-1');
 
 INSERT INTO facturas (id, cliente_id, empresa_nit, fecha, total) VALUES (
-    1, 7871, '860076820-1', '17-05-2025', 470000);
+    1, 1268, '860076820-1', '17-05-2025', 470000);
 
 INSERT INTO items_factura (factura_id, descripción, cantidad, precio_unitario) VALUES (
     1, 'Pollo Sin Viscera De 1300 Gr Refrigerado', 16.000, 9400);
