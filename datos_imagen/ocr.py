@@ -11,7 +11,7 @@ diccionario = [
     "factura", "para", "sus", "oficios", "legales", "un", "título",
     "según", "ley", "de", "julio", "menudencia", "stiven", "villarraga","Loy",
     "corazón", "alas","Pollo", "pollo", "Corazón", "alas", "Corazón",
-    "al", "mayor", "mayo", "detalle", "ventas","Régimen","Anggy" ,"Michelle","Firma","sus" # <-- Agregué "mayo"
+    "al", "mayor", "mayo", "detalle", "ventas","Régimen","Anggy" ,"Michelle","Firma","sus","Alfonso" # <-- Agregué "mayo"
 ]
 
 
@@ -37,6 +37,11 @@ reemplazos_automaticos = {
     "shuven":"Stiven",
     "eus":"sus",
     "pole":"Pollo",
+    "pøll":"Pollo",
+    "poll":"Pollo",
+    "corazón 2on":"Corazón",
+    "alas 2on":"alas",
+    
 }
 def corregir_errores_ocr_en_numeros(texto):
     if not texto:
